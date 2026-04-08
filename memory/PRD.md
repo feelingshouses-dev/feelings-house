@@ -35,6 +35,28 @@
 ### ✅ Phase 1.1: Branding Update - Completed (2024-12-08)
 ### ✅ Phase 1.2: Real Photos Integration - Completed (2024-12-08)
 ### ✅ Phase 1.3: Bilingual Support (Greek/English) - Completed (2024-12-08)
+### ✅ Phase 2: iCal Calendar Sync - Completed (2024-12-08)
+
+**iCal Synchronization System:**
+- Automatic sync with Airbnb and Booking.com every 30 minutes
+- Booking hold mechanism (15 minutes) to prevent double bookings
+- Real-time availability checking
+- Support for multiple calendar sources per property
+- Automatic cleanup of expired holds
+- MongoDB collections: calendar_sources, blocked_dates, booking_holds
+
+**API Endpoints:**
+- POST /api/calendar/calendar-sources - Add iCal URLs
+- GET /api/calendar/availability/{property_id} - Check availability
+- POST /api/calendar/sync/{property_id} - Manual sync
+- POST /api/calendar/booking-hold - Create temporary hold
+- GET /api/calendar/blocked-dates/{property_id} - Get blocked dates
+
+**Protection Features:**
+- 15-minute booking hold during checkout process
+- Multi-source blocking (prevents bookings if blocked on any platform)
+- Automatic sync every 30 minutes with APScheduler
+- Expired hold cleanup
 
 **Bilingual Implementation:**
 - Language switcher in header (Globe icon)

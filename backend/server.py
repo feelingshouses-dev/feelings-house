@@ -66,6 +66,9 @@ async def get_status_checks():
     
     return status_checks
 
+# Include calendar routes
+api_router.include_router(calendar_router, prefix="/calendar", tags=["Calendar Sync"])
+
 # Include the router in the main app
 app.include_router(api_router)
 
