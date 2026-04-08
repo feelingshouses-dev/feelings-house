@@ -1,3 +1,4 @@
+import uuid
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime, date
@@ -30,5 +31,3 @@ class BookingHold(BaseModel):
     guest_email: str
     expires_at: datetime
     status: str = "pending"  # pending, confirmed, expired
-
-import uuid

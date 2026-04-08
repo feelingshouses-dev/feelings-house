@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # MongoDB connection
-mongo_url = os.environ.get('MONGO_URL')
+mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ.get('DB_NAME', 'feelings_houses')]
+db = client[os.environ['DB_NAME']]
 
 sync_service = iCalSyncService(db)
 
@@ -78,7 +78,7 @@ async def get_calendar_sources(property_id: int):
     """Get all calendar sources for a property"""
     sources = await db.calendar_sources.find({
         "property_id": property_id
-    }).to_list(None)
+    }).to_list(100)
     
     for source in sources:
         source['_id'] = str(source['_id'])
@@ -178,7 +178,7 @@ async def get_blocked_dates(
             "$lte": end_date.isoformat()
         }
     
-    blocked = await db.blocked_dates.find(query).to_list(None)
+    blocked = await db.blocked_dates.find(query).to_list(1000)
     
     for item in blocked:
         item['_id'] = str(item['_id'])

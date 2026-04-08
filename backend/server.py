@@ -19,8 +19,54 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
-app = FastAPI()
+# Import calendar routes AFTER db is defined
+from routes.calendar_routes import router as calendar_router, sync_service
+
+# Scheduler for periodic calendar sync
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.interval import IntervalTrigger
+from contextlib import asynccontextmanager
+
+scheduler = AsyncIOScheduler()
+
+async def scheduled_calendar_sync():
+    """Run calendar sync every 30 minutes"""
+    try:
+        logger = logging.getLogger(__name__)
+        logger.info("Running scheduled calendar sync...")
+        results = await sync_service.sync_all_calendars()
+        logger.info(f"Synced {len(results)} calendar sources")
+        
+        # Also cleanup expired holds
+        await sync_service.cleanup_expired_holds()
+    except Exception as e:
+        logger = logging.getLogger(__name__)
+        logger.error(f"Error in scheduled sync: {str(e)}")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application lifecycle"""
+    logger = logging.getLogger(__name__)
+    # Startup
+    logger.info("Starting application...")
+    scheduler.add_job(
+        scheduled_calendar_sync,
+        trigger=IntervalTrigger(minutes=30),
+        id='calendar_sync',
+        name='Sync all calendars every 30 minutes',
+        replace_existing=True
+    )
+    scheduler.start()
+    logger.info("Scheduler started - calendar sync every 30 minutes")
+    
+    yield
+    
+    # Shutdown
+    scheduler.shutdown()
+    logger.info("Scheduler stopped")
+
+# Create the main app with lifespan
+app = FastAPI(lifespan=lifespan)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")

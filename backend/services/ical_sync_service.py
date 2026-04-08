@@ -139,7 +139,7 @@ class iCalSyncService:
     
     async def sync_all_calendars(self):
         """Sync all calendar sources"""
-        calendar_sources = await self.db.calendar_sources.find().to_list(None)
+        calendar_sources = await self.db.calendar_sources.find().to_list(100)
         
         results = []
         for source in calendar_sources:
@@ -161,7 +161,7 @@ class iCalSyncService:
                 "$gte": check_in.isoformat(),
                 "$lt": check_out.isoformat()
             }
-        }).to_list(None)
+        }).to_list(1000)
         
         # Check for booking holds
         holds = await self.db.booking_holds.find({
