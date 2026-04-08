@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { properties, amenitiesList } from '../utils/mockData';
-import { Wifi, AirVent, Tv, Eye, Car, ArrowRight, Star, Users, Bed } from 'lucide-react';
+import { Wifi, AirVent, Tv, Eye, Car, ArrowRight, Users, Bed } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const iconMap = {
   Wifi: Wifi,
@@ -14,6 +15,8 @@ const iconMap = {
 };
 
 const Home = () => {
+  const { t, language } = useLanguage();
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -29,21 +32,21 @@ const Home = () => {
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-            Καλώς Ήρθατε στη Σαντορίνη
+            {t('home.heroTitle')}
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-100 animate-fade-in">
-            Ανακαλύψτε τα πολυτελή σπίτια μας με απεριόριστη θέα στην Καλντέρα
+            {t('home.heroSubtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Link to="/properties">
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg">
-                Δείτε τα Σπίτια μας
+                {t('home.viewProperties')}
                 <ArrowRight className="ml-2" size={20} />
               </Button>
             </Link>
             <Link to="/booking">
               <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-white px-8 py-6 text-lg">
-                Κάντε Κράτηση
+                {t('home.makeBooking')}
               </Button>
             </Link>
           </div>
@@ -54,8 +57,8 @@ const Home = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Τα Σπίτια μας</h2>
-            <p className="text-lg text-gray-600">4 πολυτελή σπίτια με πλήρη εξοπλισμό στην καρδιά της Σαντορίνης</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t('home.ourHouses')}</h2>
+            <p className="text-lg text-gray-600">{t('home.ourHousesSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -64,25 +67,29 @@ const Home = () => {
                 <div className="relative h-64 overflow-hidden">
                   <img 
                     src={property.image} 
-                    alt={property.name}
+                    alt={language === 'el' ? property.name : property.nameEn}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full font-semibold">
-                    €{property.price}/νύχτα
+                    €{property.price}/{t('home.perNight')}
                   </div>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{property.name}</h3>
-                  <p className="text-gray-600 mb-4">{property.description}</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    {language === 'el' ? property.name : property.nameEn}
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    {language === 'el' ? property.description : property.descriptionEn}
+                  </p>
                   
                   <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
                     <div className="flex items-center gap-1">
                       <Users size={16} />
-                      <span>{property.maxGuests} άτομα</span>
+                      <span>{property.maxGuests} {t('home.guests')}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Bed size={16} />
-                      <span>{property.bedrooms} υπνοδωμάτια</span>
+                      <span>{property.bedrooms} {t('home.bedrooms')}</span>
                     </div>
                   </div>
 
@@ -96,7 +103,7 @@ const Home = () => {
 
                   <Link to={`/booking?property=${property.id}`}>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                      Κράτηση
+                      {t('home.booking')}
                       <ArrowRight className="ml-2" size={16} />
                     </Button>
                   </Link>
@@ -108,7 +115,7 @@ const Home = () => {
           <div className="text-center mt-12">
             <Link to="/properties">
               <Button variant="outline" size="lg" className="border-blue-600 text-blue-600 hover:bg-blue-50">
-                Δείτε Όλα τα Σπίτια
+                {t('home.viewAllProperties')}
                 <ArrowRight className="ml-2" size={20} />
               </Button>
             </Link>
@@ -120,8 +127,8 @@ const Home = () => {
       <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Παροχές & Υπηρεσίες</h2>
-            <p className="text-lg text-gray-600">Όλα όσα χρειάζεστε για μια τέλεια διαμονή</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t('home.amenitiesTitle')}</h2>
+            <p className="text-lg text-gray-600">{t('home.amenitiesSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
@@ -146,11 +153,11 @@ const Home = () => {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-400 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Έτοιμοι για την επόμενη διακοπή σας;</h2>
-          <p className="text-xl mb-8 text-blue-50">Κάντε κράτηση τώρα και απολαύστε την ομορφιά της Σαντορίνης</p>
+          <h2 className="text-4xl font-bold mb-4">{t('home.ctaTitle')}</h2>
+          <p className="text-xl mb-8 text-blue-50">{t('home.ctaSubtitle')}</p>
           <Link to="/booking">
             <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-6 text-lg">
-              Κάντε Κράτηση Τώρα
+              {t('home.makeBooking')}
               <ArrowRight className="ml-2" size={20} />
             </Button>
           </Link>

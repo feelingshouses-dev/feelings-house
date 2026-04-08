@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
+import { useLanguage } from '../context/LanguageContext';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { language, toggleLanguage, t } = useLanguage();
 
   const navLinks = [
-    { path: '/', label: 'Αρχική' },
-    { path: '/properties', label: 'Σπίτια' },
-    { path: '/gallery', label: 'Γκαλερί' },
-    { path: '/contact', label: 'Επικοινωνία' }
+    { path: '/', label: t('nav.home') },
+    { path: '/properties', label: t('nav.properties') },
+    { path: '/gallery', label: t('nav.gallery') },
+    { path: '/contact', label: t('nav.contact') }
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -40,9 +42,20 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+            
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              title={language === 'el' ? 'Switch to English' : 'Αλλαγή σε Ελληνικά'}
+            >
+              <Globe size={18} />
+              <span className="uppercase">{language === 'el' ? 'EN' : 'ΕΛ'}</span>
+            </button>
+            
             <Link to="/booking">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                Κράτηση Τώρα
+                {t('nav.bookNow')}
               </Button>
             </Link>
           </div>
@@ -72,9 +85,22 @@ const Header = () => {
                   {link.label}
                 </Link>
               ))}
+              
+              {/* Mobile Language Switcher */}
+              <button
+                onClick={() => {
+                  toggleLanguage();
+                  setIsOpen(false);
+                }}
+                className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                <Globe size={18} />
+                <span>{language === 'el' ? 'English' : 'Ελληνικά'}</span>
+              </button>
+              
               <Link to="/booking" onClick={() => setIsOpen(false)}>
                 <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                  Κράτηση Τώρα
+                  {t('nav.bookNow')}
                 </Button>
               </Link>
             </div>
