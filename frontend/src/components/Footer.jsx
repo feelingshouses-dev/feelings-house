@@ -10,10 +10,10 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              Santorini Homes
+              Feelings Houses Santorini
             </h3>
             <p className="text-sm text-gray-600">
-              Ενοικιαζόμενα σπίτια στην καρδιά της Σαντορίνης με απεριόριστη θέα στο Αιγαίο.
+              Πολυτελή ενοικιαζόμενα σπίτια στο Εμπορείο Σαντορίνης με απεριόριστη θέα.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">
@@ -58,15 +58,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start space-x-3 text-sm text-gray-600">
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
-                <span>Φηρά, Σαντορίνη 84700</span>
+                <span>Άγιος Γεώργιος, Εμπορείο<br />847 03 Σαντορίνη</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-gray-600">
                 <Phone size={16} className="flex-shrink-0" />
-                <span>+30 22860 12345</span>
+                <span>+30 697 612 5764</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-gray-600">
                 <Mail size={16} className="flex-shrink-0" />
-                <span>info@santorinihomes.gr</span>
+                <span>info@feelingshouses.gr</span>
               </li>
             </ul>
           </div>
@@ -92,7 +92,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-200 mt-8 pt-8 text-center">
           <p className="text-sm text-gray-600">
-            © 2024 Santorini Homes. Με επιφύλαξη παντός δικαιώματος.
+            © 2024 Feelings Houses Santorini. Με επιφύλαξη παντός δικαιώματος.
           </p>
         </div>
       </div>

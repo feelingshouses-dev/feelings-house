@@ -138,8 +138,8 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Διεύθυνση</h3>
                     <p className="text-gray-600 text-sm">
-                      Φηρά, Σαντορίνη<br />
-                      84700, Ελλάδα
+                      Άγιος Γεώργιος, Εμπορείο<br />
+                      847 03 Σαντορίνη, Ελλάδα
                     </p>
                   </div>
                 </div>
@@ -151,8 +151,7 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Τηλέφωνο</h3>
                     <p className="text-gray-600 text-sm">
-                      +30 22860 12345<br />
-                      +30 694 567 8910
+                      +30 697 612 5764
                     </p>
                   </div>
                 </div>
@@ -164,8 +163,8 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
                     <p className="text-gray-600 text-sm">
-                      info@santorinihomes.gr<br />
-                      bookings@santorinihomes.gr
+                      info@feelingshouses.gr<br />
+                      bookings@feelingshouses.gr
                     </p>
                   </div>
                 </div>
@@ -185,15 +184,19 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            {/* Map Placeholder */}
+            {/* Google Map */}
             <Card>
               <CardContent className="p-0">
-                <div className="h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin size={48} className="text-blue-600 mx-auto mb-2" />
-                    <p className="text-gray-700 font-semibold">Φηρά, Σαντορίνη</p>
-                  </div>
-                </div>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3195.5826847944786!2d25.451553476440696!3d36.34457920098276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1499cfe873bf4f2d%3A0x805e2a017dc5823b!2sFeeling%20Houses!5e0!3m2!1sen!2sgr!4v1234567890123!5m2!1sen!2sgr"
+                  width="100%"
+                  height="256"
+                  style={{ border: 0, borderRadius: '0.5rem' }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Feelings Houses Location"
+                ></iframe>
               </CardContent>
             </Card>
           </div>

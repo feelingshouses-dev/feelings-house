@@ -22,9 +22,17 @@
 - **Payment**: Stripe integration (planned)
 - **Design**: Mediterranean/Cycladic theme (white-blue, minimal)
 
-## What's Been Implemented (2024-12-08)
+## Branding & Contact Information
+- **Business Name**: Feelings Houses Santorini
+- **Location**: Άγιος Γεώργιος, Εμπορείο 847 03 Σαντορίνη
+- **Phone**: +30 697 612 5764
+- **Email**: info@feelingshouses.gr, bookings@feelingshouses.gr
+- **Google Maps**: Integrated with real location
 
-### ✅ Frontend (Mock Data Phase)
+## What's Been Implemented
+
+### ✅ Phase 1: Frontend (Mock Data) - Completed (2024-12-08)
+### ✅ Phase 1.1: Branding Update - Completed (2024-12-08)
 1. **Homepage** (`/`)
    - Hero section with Santorini sunset image
    - Featured properties section (4 houses)
