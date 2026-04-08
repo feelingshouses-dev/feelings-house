@@ -36,6 +36,18 @@
 ### ✅ Phase 1.2: Real Photos Integration - Completed (2024-12-08)
 ### ✅ Phase 1.3: Bilingual Support (Greek/English) - Completed (2024-12-08)
 ### ✅ Phase 2: iCal Calendar Sync - Completed (2024-12-08)
+### ✅ Phase 2.1: Admin Panel for Calendar Management - Completed (2024-12-08)
+
+**Admin Panel Features:**
+- User-friendly interface for adding iCal URLs
+- Support for multiple platforms (Airbnb, Booking.com, VRBO)
+- Real-time sync status monitoring
+- Manual sync trigger per property
+- Calendar source management (add/delete)
+- Visual sync status indicators
+- Direct links to Airbnb/Booking.com dashboards
+- Instructions and help section integrated
+- Accessible at `/admin/calendar-sync`
 
 **iCal Synchronization System:**
 - Automatic sync with Airbnb and Booking.com every 30 minutes

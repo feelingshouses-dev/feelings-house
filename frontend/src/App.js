@@ -9,6 +9,7 @@ import Properties from './pages/Properties';
 import Booking from './pages/Booking';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
+import AdminCalendarSync from './pages/AdminCalendarSync';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/booking" element={<Booking />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/admin/calendar-sync" element={<AdminCalendarSync />} />
           </Routes>
           <Footer />
           <Toaster position="top-right" />
