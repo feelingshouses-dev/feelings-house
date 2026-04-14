@@ -12,18 +12,18 @@ export const translations = {
     // Home Page
     home: {
       heroTitle: "Καλώς Ήρθατε στη Σαντορίνη",
-      heroSubtitle: "Ανακαλύψτε τα πολυτελή σπίτια μας με απεριόριστη θέα στην Καλντέρα",
+      heroSubtitle: "Ανακαλύψτε τα πολυτελή σπίτια μας με θέα σε βουνό και θάλασσα",
       viewProperties: "Δείτε τα Σπίτια μας",
       makeBooking: "Κάντε Κράτηση",
       ourHouses: "Τα Σπίτια μας",
-      ourHousesSubtitle: "4 πολυτελή σπίτια με πλήρη εξοπλισμό στην καρδιά της Σαντορίνης",
+      ourHousesSubtitle: "4 πολυτελή σπίτια με πλήρη εξοπλισμό στον Άγιο Γεώργιο",
       perNight: "νύχτα",
       guests: "άτομα",
       bedrooms: "υπνοδωμάτια",
       viewAllProperties: "Δείτε Όλα τα Σπίτια",
       amenitiesTitle: "Παροχές & Υπηρεσίες",
       amenitiesSubtitle: "Όλα όσα χρειάζεστε για μια τέλεια διαμονή",
-      ctaTitle: "Έτοιμοι για την επόμενη διακοπή σας;",
+      ctaTitle: "Έτοιμοι για τις επόμενες διακοπές σας;",
       ctaSubtitle: "Κάντε κράτηση τώρα και απολαύστε την ομορφιά της Σαντορίνης",
       booking: "Κράτηση"
     },
@@ -137,18 +137,18 @@ export const translations = {
     // Home Page
     home: {
       heroTitle: "Welcome to Santorini",
-      heroSubtitle: "Discover our luxury houses with unlimited Caldera view",
+      heroSubtitle: "Discover our luxury houses with mountain and sea views",
       viewProperties: "View Our Houses",
       makeBooking: "Make a Booking",
       ourHouses: "Our Houses",
-      ourHousesSubtitle: "4 fully equipped luxury houses in the heart of Santorini",
+      ourHousesSubtitle: "4 fully equipped luxury houses in Agios Georgios",
       perNight: "night",
       guests: "guests",
       bedrooms: "bedrooms",
       viewAllProperties: "View All Houses",
       amenitiesTitle: "Amenities & Services",
       amenitiesSubtitle: "Everything you need for a perfect stay",
-      ctaTitle: "Ready for your next vacation?",
+      ctaTitle: "Ready for your next holidays?",
       ctaSubtitle: "Book now and enjoy the beauty of Santorini",
       booking: "Booking"
     },
