@@ -24,9 +24,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              Feelings Houses Santorini
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Feelings Houses Santorini" 
+              className="h-12 md:h-14 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
