@@ -21,7 +21,10 @@ db = client[os.environ['DB_NAME']]
 
 # Import routes AFTER db is defined
 from routes.calendar_routes import router as calendar_router, sync_service
-from routes.property_routes import router as property_router
+from routes.property_routes import router as property_router, init_db as init_property_db
+
+# Initialize property routes with shared database
+init_property_db(db)
 
 # Scheduler for periodic calendar sync
 from apscheduler.schedulers.asyncio import AsyncIOScheduler

@@ -1,22 +1,19 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from datetime import datetime
-from motor.motor_asyncio import AsyncIOMotorClient
-import os
-from dotenv import load_dotenv
 
 from models.property_model import Property, PropertyUpdate
 
-load_dotenv()
-
 router = APIRouter(tags=["Properties"])
 
-# MongoDB connection
-MONGO_URL = os.environ.get('MONGO_URL')
-DB_NAME = os.environ.get('DB_NAME', 'feelings_houses')
-client = AsyncIOMotorClient(MONGO_URL)
-db = client[DB_NAME]
-properties_collection = db.properties
+# Import shared database connection from server.py
+# This will be injected when the routes are included
+properties_collection = None
+
+def init_db(db):
+    """Initialize database connection"""
+    global properties_collection
+    properties_collection = db.properties
 
 @router.get("/", response_model=List[Property])
 async def get_all_properties(active_only: bool = False):
