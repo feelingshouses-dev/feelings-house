@@ -214,15 +214,28 @@ const Contact = () => {
             <CardContent className="p-0">
               <div className="w-full h-96 rounded-lg overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3195.757!2d25.453917!3d36.346999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzbCsDIwJzQ5LjIiTiAyNcKwMjcnMTQuMSJF!5e0!3m2!1sel!2sgr!4v1"
+                  src="https://www.google.com/maps?q=36.346999,25.453917&hl=el&z=15&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Feelings Houses Location - Άγιος Γεώργιος, Περίβολος, Σαντορίνη"
+                  title="Feelings Houses - Άγιος Γεώργιος, Περίβολος, Σαντορίνη"
                 />
+              </div>
+              <div className="p-4 text-center">
+                <a 
+                  href="https://maps.app.goo.gl/yRnYHiTj7qjQdHLq9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                  </svg>
+                  Ανοίξτε στο Google Maps
+                </a>
               </div>
             </CardContent>
           </Card>
