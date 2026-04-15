@@ -8,9 +8,93 @@ import { useLanguage } from '../context/LanguageContext';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
+// Fallback data με σωστές Airbnb φωτογραφίες
+const FALLBACK_PROPERTIES = [
+  {
+    property_id: "feelings-4",
+    name: { gr: "Feelings #4", en: "Feelings #4" },
+    bedrooms: 1,
+    bathrooms: 1,
+    max_guests: 4,
+    price_per_night: 0,
+    short_description: {
+      gr: "Άνετη μεζονέτα με θέα στη θάλασσα και το βουνό, 5 λεπτά από την παραλία",
+      en: "Cozy maisonette with sea and mountain views, 5 minutes from the beach"
+    },
+    photos: [
+      "https://a0.muscache.com/im/pictures/adcf6013-4bca-4cff-9d76-a6510cf01a0c.jpg",
+      "https://a0.muscache.com/im/pictures/48123589-4009-4707-8647-152974ed8707.jpg",
+      "https://a0.muscache.com/im/pictures/1e10bbe8-0cdf-442b-ba93-7ff8cf0ea795.jpg"
+    ],
+    rating: 4.86,
+    review_count: 50,
+    featured: false
+  },
+  {
+    property_id: "courtly-love",
+    name: { gr: "Courtly Love", en: "Courtly Love" },
+    bedrooms: 1,
+    bathrooms: 1,
+    max_guests: 4,
+    price_per_night: 0,
+    short_description: {
+      gr: "Άνετη μεζονέτα με θέα, 5 λεπτά από την παραλία",
+      en: "Cozy maisonette with views, 5 minutes from the beach"
+    },
+    photos: [
+      "https://a0.muscache.com/im/pictures/f7753e8d-bd2d-462b-a6ea-b92b7c1c8115.jpg",
+      "https://a0.muscache.com/im/pictures/43b8f9a0-3f8e-41f0-a2d5-b84aa5866276.jpg",
+      "https://a0.muscache.com/im/pictures/fda7e404-cc57-4f09-bf2a-2affd7877df8.jpg"
+    ],
+    rating: 4.9,
+    review_count: 58,
+    featured: true
+  },
+  {
+    property_id: "the-journey",
+    name: { gr: "Το Ταξίδι", en: "The Journey" },
+    bedrooms: 1,
+    bathrooms: 1,
+    max_guests: 4,
+    price_per_night: 0,
+    short_description: {
+      gr: "Άνετο σπίτι με τζάκι και υπέροχη ανατολή ηλίου",
+      en: "Cozy house with fireplace and beautiful sunrise"
+    },
+    photos: [
+      "https://a0.muscache.com/im/pictures/86b4b999-09ff-4ecc-87fc-112504ade0c2.jpg",
+      "https://a0.muscache.com/im/pictures/hosting/Hosting-27736860/original/44b4df68-029b-40dc-b377-da2572b0ca24.jpeg",
+      "https://a0.muscache.com/im/pictures/ce43832d-ebf3-4805-aa61-ab80808e320c.jpg"
+    ],
+    rating: 4.95,
+    review_count: 102,
+    featured: true
+  },
+  {
+    property_id: "feelings-houses",
+    name: { gr: "Feelings Houses", en: "Feelings Houses" },
+    bedrooms: 2,
+    bathrooms: 1,
+    max_guests: 5,
+    price_per_night: 0,
+    short_description: {
+      gr: "Ευρύχωρη μεζονέτα με 2 υπνοδωμάτια και θέα",
+      en: "Spacious maisonette with 2 bedrooms and views"
+    },
+    photos: [
+      "https://a0.muscache.com/im/pictures/8b2c981c-af77-4d03-8239-f67198c0fdfb.jpg",
+      "https://a0.muscache.com/im/pictures/c52abe46-098d-4cdf-b6d2-027dcc3b5606.jpg",
+      "https://a0.muscache.com/im/pictures/318808c7-311b-4e79-b9c6-2b1e7f48bb9f.jpg"
+    ],
+    rating: 4.92,
+    review_count: 96,
+    featured: true
+  }
+];
+
 const Properties = () => {
   const { language } = useLanguage();
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState(FALLBACK_PROPERTIES);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
 
@@ -20,11 +104,14 @@ const Properties = () => {
 
   const fetchProperties = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/properties/?active_only=true`);
-      setProperties(response.data);
-      setLoading(false);
+      const response = await axios.get(`${API_URL}/api/properties/?active_only=true`, { timeout: 5000 });
+      if (response.data && response.data.length > 0) {
+        setProperties(response.data);
+      }
     } catch (error) {
-      console.error('Error fetching properties:', error);
+      console.log('Using fallback property data');
+      // Already using FALLBACK_PROPERTIES
+    } finally {
       setLoading(false);
     }
   };
