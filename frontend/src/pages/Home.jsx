@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { properties, amenitiesList } from '../utils/mockData';
+import { amenitiesList } from '../utils/mockData';
 import { Wifi, AirVent, Tv, Eye, Car, ArrowRight, Users, Bed } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const iconMap = {
   Wifi: Wifi,
@@ -16,6 +19,44 @@ const iconMap = {
 
 const Home = () => {
   const { t, language } = useLanguage();
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/properties/?active_only=true`);
+      if (response.data && response.data.length > 0) {
+        // Transform backend data to match frontend format
+        const transformedProperties = response.data.map(prop => ({
+          id: prop.property_id,
+          image: prop.photos[0],
+          name: prop.name.gr,
+          nameEn: prop.name.en,
+          description: prop.short_description.gr,
+          descriptionEn: prop.short_description.en,
+          price: prop.price_per_night > 0 ? prop.price_per_night : 120,
+          maxGuests: prop.max_guests,
+          bedrooms: prop.bedrooms,
+          amenities: ['WiFi', 'A/C', 'Kitchen', 'Sea View']
+        }));
+        setProperties(transformedProperties);
+      }
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+      // Use fallback if API fails
+      setProperties([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
   
   return (
     <div className="min-h-screen">
