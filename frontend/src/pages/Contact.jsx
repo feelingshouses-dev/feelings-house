@@ -202,6 +202,32 @@ const Contact = () => {
           </div>
         </div>
 
+        {/* Google Maps */}
+        <div className="mt-16 max-w-6xl mx-auto">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-center">Βρείτε μας στο Χάρτη</CardTitle>
+              <p className="text-center text-gray-600 mt-2">
+                Αγίου Γεωργίου, Περίβολος, Σαντορίνη
+              </p>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="w-full h-96 rounded-lg overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3195.8276699845!2d25.464!3d36.353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzbCsDIxJzEwLjgiTiAyNcKwMjcnNTAuNCJF!5e0!3m2!1sel!2sgr!4v1"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Feelings Houses Location"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Additional Info */}
         <div className="mt-16 max-w-4xl mx-auto">
           <Card className="bg-gradient-to-r from-blue-600 to-blue-400 text-white">
