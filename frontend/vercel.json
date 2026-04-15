@@ -4,11 +4,5 @@
   "installCommand": "yarn install",
   "buildCommand": "yarn build",
   "outputDirectory": "build",
-  "framework": "create-react-app",
-  "env": {
-    "REACT_APP_BACKEND_URL": {
-      "description": "Backend API URL from Render",
-      "value": "https://feelings-houses-backend.onrender.com"
-    }
-  }
+  "framework": "create-react-app"
 }
