@@ -16,7 +16,7 @@ export const translations = {
       viewProperties: "Δείτε τα Σπίτια μας",
       makeBooking: "Κάντε Κράτηση",
       ourHouses: "Τα Σπίτια μας",
-      ourHousesSubtitle: "4 πολυτελή σπίτια με πλήρη εξοπλισμό στον Άγιο Γεώργιο",
+      ourHousesSubtitle: "4 πολυτελή σπίτια με πλήρη εξοπλισμό στον Άγιο Γεώργιο, Περίβολος",
       perNight: "νύχτα",
       guests: "άτομα",
       bedrooms: "υπνοδωμάτια",
