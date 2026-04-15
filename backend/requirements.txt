@@ -17,3 +17,4 @@ APScheduler==3.10.4
 
 # CORS
 starlette==0.37.2
+resend==2.28.1

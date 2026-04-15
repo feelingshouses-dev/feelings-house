@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Label } from '../components/ui/label';
@@ -7,6 +8,8 @@ import { Textarea } from '../components/ui/textarea';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { toast } from 'sonner';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -14,32 +17,37 @@ const Contact = () => {
     phone: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Mock submission - save to localStorage
-    const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
-    submissions.push({
-      ...formData,
-      id: Date.now(),
-      date: new Date().toISOString()
-    });
-    localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
-
-    toast.success('Το μήνυμά σας εστάλη επιτυχώς! Θα επικοινωνήσουμε σύντομα μαζί σας.');
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: ''
-    });
+    try {
+      const response = await axios.post(`${API_URL}/api/contact/submit`, formData);
+      
+      toast.success(response.data.message || 'Το μήνυμά σας εστάλη επιτυχώς!');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Contact form error:', error);
+      toast.error(
+        error.response?.data?.detail || 
+        'Αποτυχία αποστολής μηνύματος. Παρακαλώ δοκιμάστε ξανά.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -114,10 +122,11 @@ const Contact = () => {
 
                   <Button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Send className="mr-2" size={20} />
-                    Αποστολή Μηνύματος
+                    {isSubmitting ? 'Αποστολή...' : 'Αποστολή Μηνύματος'}
                   </Button>
                 </form>
               </CardContent>
