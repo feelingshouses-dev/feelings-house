@@ -91,3 +91,22 @@ async def delete_property(property_id: str):
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Property not found")
     return {"message": "Property deactivated successfully"}
+
+@router.post("/seed")
+async def seed_properties_endpoint():
+    """Seed properties database (One-time setup)"""
+    from seed_properties import PROPERTIES_DATA
+    
+    count = 0
+    for prop_data in PROPERTIES_DATA:
+        existing = await properties_collection.find_one({"property_id": prop_data["property_id"]})
+        if existing:
+            continue
+        
+        prop_data["created_at"] = datetime.utcnow()
+        prop_data["updated_at"] = datetime.utcnow()
+        await properties_collection.insert_one(prop_data)
+        count += 1
+    
+    total = await properties_collection.count_documents({})
+    return {"message": f"Seeded {count} new properties. Total: {total}"}
