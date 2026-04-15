@@ -76,7 +76,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3 text-sm text-gray-600 hover:text-blue-600 transition-colors">
                 <Mail size={16} className="flex-shrink-0" />
-                <a href="mailto:info@feelingshouses.gr">info@feelingshouses.gr</a>
+                <a href="mailto:feelingshouses@gmail.com">info@feelingshouses.gr</a>
+              </li>
+              <li className="flex items-center space-x-3 text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <Mail size={16} className="flex-shrink-0" />
+                <a href="mailto:feelingshouses@gmail.com">bookings@feelingshouses.gr</a>
               </li>
             </ul>
           </div>
