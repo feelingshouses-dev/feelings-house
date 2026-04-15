@@ -50,6 +50,23 @@ async def lifespan(app: FastAPI):
     logger = logging.getLogger(__name__)
     # Startup
     logger.info("Starting application...")
+    
+    # Auto-seed properties if collection is empty
+    try:
+        properties_count = await db.properties.count_documents({})
+        if properties_count == 0:
+            logger.info("Properties collection is empty - auto-seeding...")
+            from seed_properties import PROPERTIES_DATA
+            for prop_data in PROPERTIES_DATA:
+                prop_data["created_at"] = datetime.utcnow()
+                prop_data["updated_at"] = datetime.utcnow()
+                await db.properties.insert_one(prop_data)
+            logger.info(f"✅ Auto-seeded {len(PROPERTIES_DATA)} properties")
+        else:
+            logger.info(f"Properties collection already has {properties_count} properties")
+    except Exception as e:
+        logger.error(f"Error auto-seeding properties: {e}")
+    
     scheduler.add_job(
         scheduled_calendar_sync,
         trigger=IntervalTrigger(minutes=30),
