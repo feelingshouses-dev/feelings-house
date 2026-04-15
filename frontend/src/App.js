@@ -10,6 +10,7 @@ import Booking from './pages/Booking';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import AdminCalendarSync from './pages/AdminCalendarSync';
+import AdminProperties from './pages/AdminProperties';
 import './App.css';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin/calendar-sync" element={<AdminCalendarSync />} />
+            <Route path="/admin/properties" element={<AdminProperties />} />
           </Routes>
           <Footer />
           <Toaster position="top-right" />

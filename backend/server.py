@@ -19,8 +19,9 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Import calendar routes AFTER db is defined
+# Import routes AFTER db is defined
 from routes.calendar_routes import router as calendar_router, sync_service
+from routes.property_routes import router as property_router
 
 # Scheduler for periodic calendar sync
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -112,8 +113,9 @@ async def get_status_checks():
     
     return status_checks
 
-# Include calendar routes
+# Include routes
 api_router.include_router(calendar_router, prefix="/calendar", tags=["Calendar Sync"])
+api_router.include_router(property_router, prefix="/properties", tags=["Properties"])
 
 # Include the router in the main app
 app.include_router(api_router)
