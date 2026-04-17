@@ -28,7 +28,9 @@ const Home = () => {
 
   const fetchProperties = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/properties/?active_only=true`);
+      const response = await axios.get(`${API_URL}/api/properties/?active_only=true`, { 
+        timeout: 8000 // 8 second timeout
+      });
       if (response.data && response.data.length > 0) {
         // Transform backend data to match frontend format
         const transformedProperties = response.data.map(prop => ({
@@ -47,15 +49,42 @@ const Home = () => {
       }
     } catch (error) {
       console.error('Error fetching properties:', error);
-      // Use fallback if API fails
-      setProperties([]);
+      // Use fallback data for better UX
+      setProperties([
+        {
+          id: '1',
+          image: 'https://a0.muscache.com/im/pictures/adcf6013-4bca-4cff-9d76-a6510cf01a0c.jpg',
+          name: 'Feelings #4',
+          nameEn: 'Feelings #4',
+          description: 'Άνετη μεζονέτα με θέα',
+          descriptionEn: 'Cozy maisonette with view',
+          price: 120,
+          maxGuests: 4,
+          bedrooms: 1,
+          amenities: ['WiFi', 'A/C', 'Kitchen', 'Sea View']
+        }
+      ]);
     } finally {
       setLoading(false);
     }
   };
   
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return (
+      <div className="min-h-screen">
+        {/* Hero Skeleton */}
+        <section className="relative h-screen flex items-center justify-center bg-gradient-to-b from-gray-300 to-gray-200 animate-pulse">
+          <div className="text-center px-4">
+            <div className="h-16 w-96 max-w-full bg-gray-400 rounded mx-auto mb-6"></div>
+            <div className="h-8 w-64 max-w-full bg-gray-400 rounded mx-auto mb-8"></div>
+            <div className="flex gap-4 justify-center">
+              <div className="h-12 w-32 bg-gray-400 rounded"></div>
+              <div className="h-12 w-32 bg-gray-400 rounded"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
   }
   
   return (

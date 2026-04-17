@@ -104,13 +104,15 @@ const Properties = () => {
 
   const fetchProperties = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/properties/?active_only=true`, { timeout: 5000 });
+      const response = await axios.get(`${API_URL}/api/properties/?active_only=true`, { 
+        timeout: 8000 // 8 second timeout
+      });
       if (response.data && response.data.length > 0) {
         setProperties(response.data);
       }
     } catch (error) {
       console.log('Using fallback property data');
-      // Already using FALLBACK_PROPERTIES
+      // Already using FALLBACK_PROPERTIES as initial state
     } finally {
       setLoading(false);
     }
@@ -157,8 +159,29 @@ const Properties = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-24 pb-16 flex items-center justify-center">
-        <div className="text-2xl text-gray-600">Loading properties...</div>
+      <div className="min-h-screen pt-24 pb-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 animate-pulse">
+            <div className="h-12 w-64 bg-gray-200 rounded mx-auto mb-4"></div>
+            <div className="h-6 w-96 max-w-full bg-gray-200 rounded mx-auto"></div>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="bg-white rounded-lg shadow overflow-hidden animate-pulse">
+                <div className="h-80 bg-gray-200"></div>
+                <div className="p-6 space-y-4">
+                  <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded"></div>
+                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                  <div className="flex gap-4 pt-4">
+                    <div className="h-10 bg-gray-200 rounded w-20"></div>
+                    <div className="h-10 bg-gray-200 rounded w-20"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
