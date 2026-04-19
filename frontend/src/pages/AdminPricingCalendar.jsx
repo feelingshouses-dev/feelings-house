@@ -11,7 +11,8 @@ import LogoutButton from '../components/LogoutButton';
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const AdminPricingCalendar = () => {
-  const [selectedProperty, setSelectedProperty] = useState('feelings-4');
+  const [selectedProperty, setSelectedProperty] = useState('feelings-1');
+  const [properties, setProperties] = useState([]);
   const [currentYear, setCurrentYear] = useState(2026);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [dailyPrices, setDailyPrices] = useState({});
@@ -30,6 +31,24 @@ const AdminPricingCalendar = () => {
   ];
 
   const dayNames = ['Κυρ', 'Δευ', 'Τρί', 'Τετ', 'Πέμ', 'Παρ', 'Σάβ'];
+
+
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/api/properties/`);
+      setProperties(response.data);
+      if (response.data.length > 0 && !selectedProperty) {
+        setSelectedProperty(response.data[0].property_id);
+      }
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+      toast.error('Σφάλμα φόρτωσης properties');
+    }
+  };
 
   useEffect(() => {
     fetchDailyPrices();
