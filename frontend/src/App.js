@@ -11,6 +11,7 @@ import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 import AdminCalendarSync from './pages/AdminCalendarSync';
 import AdminProperties from './pages/AdminProperties';
+import AdminPricingCalendar from './pages/AdminPricingCalendar';
 import './App.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin/calendar-sync" element={<AdminCalendarSync />} />
             <Route path="/admin/properties" element={<AdminProperties />} />
+            <Route path="/admin/pricing" element={<AdminPricingCalendar />} />
           </Routes>
           <Footer />
           <Toaster position="top-right" />

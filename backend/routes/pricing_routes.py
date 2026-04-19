@@ -306,6 +306,107 @@ async def calculate_refund(request: CancellationRequest):
         "reason": reason
     }
 
+# ==================== DAILY PRICING ====================
+
+class DailyPriceUpdate(BaseModel):
+    property_id: str
+    date: str  # YYYY-MM-DD
+    price_per_night: float
+
+class BulkDailyPriceUpdate(BaseModel):
+    property_id: str
+    dates: List[str]  # List of YYYY-MM-DD dates
+    price_per_night: float
+
+@router.post("/daily-price")
+async def set_daily_price(update: DailyPriceUpdate):
+    """Set price for a specific date"""
+    price_dict = {
+        "property_id": update.property_id,
+        "date": update.date,
+        "price_per_night": update.price_per_night,
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    result = await db.daily_prices.update_one(
+        {"property_id": update.property_id, "date": update.date},
+        {"$set": price_dict},
+        upsert=True
+    )
+    
+    return {"status": "success", "price": price_dict}
+
+@router.post("/daily-prices/bulk")
+async def set_bulk_daily_prices(update: BulkDailyPriceUpdate):
+    """Set price for multiple dates at once"""
+    operations = []
+    
+    for date_str in update.dates:
+        operations.append({
+            "update_one": {
+                "filter": {"property_id": update.property_id, "date": date_str},
+                "update": {
+                    "$set": {
+                        "property_id": update.property_id,
+                        "date": date_str,
+                        "price_per_night": update.price_per_night,
+                        "updated_at": datetime.now(timezone.utc).isoformat()
+                    }
+                },
+                "upsert": True
+            }
+        })
+    
+    if operations:
+        await db.daily_prices.bulk_write(operations)
+    
+    return {
+        "status": "success",
+        "message": f"Updated {len(update.dates)} dates",
+        "dates_updated": len(update.dates)
+    }
+
+@router.get("/daily-prices/{property_id}")
+async def get_daily_prices(
+    property_id: str,
+    start_date: str,
+    end_date: str
+):
+    """Get daily prices for a date range"""
+    prices = await db.daily_prices.find(
+        {
+            "property_id": property_id,
+            "date": {"$gte": start_date, "$lte": end_date}
+        },
+        {"_id": 0}
+    ).to_list(1000)
+    
+    # Fill in missing dates with base price
+    pricing_config = await db.property_pricing.find_one(
+        {"property_id": property_id},
+        {"_id": 0}
+    )
+    base_price = pricing_config.get("base_price", 120.0) if pricing_config else 120.0
+    
+    # Create a map of existing prices
+    price_map = {p["date"]: p["price_per_night"] for p in prices}
+    
+    # Generate all dates in range
+    start = datetime.strptime(start_date, "%Y-%m-%d").date()
+    end = datetime.strptime(end_date, "%Y-%m-%d").date()
+    current = start
+    
+    all_prices = []
+    while current <= end:
+        date_str = current.isoformat()
+        all_prices.append({
+            "date": date_str,
+            "price_per_night": price_map.get(date_str, base_price)
+        })
+        current += timedelta(days=1)
+    
+    return {"property_id": property_id, "prices": all_prices}
+
 # ==================== BULK SEASONAL RATES SETUP ====================
 
 @router.post("/seasonal-rates/bulk/{property_id}")
