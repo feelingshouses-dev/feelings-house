@@ -23,6 +23,7 @@ db = client[os.environ['DB_NAME']]
 from routes.calendar_routes import router as calendar_router, sync_service
 from routes.property_routes import router as property_router, init_db as init_property_db
 from routes.contact_routes import router as contact_router
+from routes.pricing_routes import router as pricing_router
 
 # Initialize property routes with shared database
 init_property_db(db)
@@ -138,6 +139,7 @@ async def get_status_checks():
 api_router.include_router(calendar_router, prefix="/calendar", tags=["Calendar Sync"])
 api_router.include_router(property_router, prefix="/properties", tags=["Properties"])
 api_router.include_router(contact_router, prefix="/contact", tags=["Contact"])
+api_router.include_router(pricing_router, prefix="/pricing", tags=["Pricing"])
 
 # Include the router in the main app
 app.include_router(api_router)
