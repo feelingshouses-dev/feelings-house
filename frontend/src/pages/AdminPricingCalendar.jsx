@@ -31,6 +31,7 @@ const AdminPricingCalendar = () => {
 
   useEffect(() => {
     fetchDailyPrices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProperty, currentYear, currentMonth]);
 
   const fetchDailyPrices = async () => {
