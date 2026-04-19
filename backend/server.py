@@ -57,6 +57,10 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting application...")
     
+    # Run migrations
+    from migrations.fix_calendar_property_ids import migrate_calendar_property_ids
+    await migrate_calendar_property_ids(db)
+    
     # Seed admin user
     await seed_admin()
     
