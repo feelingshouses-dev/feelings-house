@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Calendar, ChevronLeft, ChevronRight, Save, Copy, Edit2, TrendingUp, TrendingDown } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Save, Copy, Edit2, TrendingUp, TrendingDown, Home } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { toast } from 'sonner';
 import LogoutButton from '../components/LogoutButton';
 
@@ -317,6 +318,59 @@ const AdminPricingCalendar = () => {
           </div>
           <LogoutButton />
         </div>
+
+        {/* Property Selector */}
+        <Card className="mb-6">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-4">
+              <Home className="text-blue-600" size={24} />
+              <div className="flex-1">
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Επιλέξτε Σπίτι
+                </label>
+                <Select value={selectedProperty} onValueChange={setSelectedProperty}>
+                  <SelectTrigger className="w-full max-w-md">
+                    <SelectValue placeholder="Επιλέξτε σπίτι..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {properties.map((property) => (
+                      <SelectItem key={property.property_id} value={property.property_id}>
+                        {property.title.el || property.title.en}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+
+        {/* Property Selector */}
+        <Card className="mb-6">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-4">
+              <Home className="text-blue-600" size={24} />
+              <div className="flex-1">
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Επιλέξτε Σπίτι
+                </label>
+                <Select value={selectedProperty} onValueChange={setSelectedProperty}>
+                  <SelectTrigger className="w-full max-w-md">
+                    <SelectValue placeholder="Επιλέξτε σπίτι..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {properties.map((property) => (
+                      <SelectItem key={property.property_id} value={property.property_id}>
+                        {property.title.el || property.title.en}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Controls */}
         <Card className="mb-6">
