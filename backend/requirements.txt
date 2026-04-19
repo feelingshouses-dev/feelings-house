@@ -7,7 +7,7 @@ PyJWT==2.12.1
 python-multipart==0.0.24
 pydantic==2.10.6
 pydantic-settings==2.8.0
-resend==2.6.1
+resend==2.29.0
 email-validator==2.3.0
 APScheduler==3.10.4
 icalendar==6.1.1
