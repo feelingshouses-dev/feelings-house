@@ -304,7 +304,24 @@ const AdminPricingCalendar = () => {
   };
 
   if (loading) {
-    return <div className="p-8">Φόρτωση...</div>;
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Φόρτωση...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (properties.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600">Δεν βρέθηκαν properties</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -333,11 +350,17 @@ const AdminPricingCalendar = () => {
                     <SelectValue placeholder="Επιλέξτε σπίτι..." />
                   </SelectTrigger>
                   <SelectContent>
-                    {properties.map((property) => (
-                      <SelectItem key={property.property_id} value={property.property_id}>
-                        {property.title.el || property.title.en}
+                    {properties && properties.length > 0 ? (
+                      properties.map((property) => (
+                        <SelectItem key={property.property_id} value={property.property_id}>
+                          {property.title?.el || property.title?.en || property.property_id}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="loading" disabled>
+                        Φόρτωση...
                       </SelectItem>
-                    ))}
+                    )}
                   </SelectContent>
                 </Select>
               </div>
@@ -360,11 +383,17 @@ const AdminPricingCalendar = () => {
                     <SelectValue placeholder="Επιλέξτε σπίτι..." />
                   </SelectTrigger>
                   <SelectContent>
-                    {properties.map((property) => (
-                      <SelectItem key={property.property_id} value={property.property_id}>
-                        {property.title.el || property.title.en}
+                    {properties && properties.length > 0 ? (
+                      properties.map((property) => (
+                        <SelectItem key={property.property_id} value={property.property_id}>
+                          {property.title?.el || property.title?.en || property.property_id}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="loading" disabled>
+                        Φόρτωση...
                       </SelectItem>
-                    ))}
+                    )}
                   </SelectContent>
                 </Select>
               </div>
