@@ -339,26 +339,19 @@ async def set_daily_price(update: DailyPriceUpdate):
 @router.post("/daily-prices/bulk")
 async def set_bulk_daily_prices(update: BulkDailyPriceUpdate):
     """Set price for multiple dates at once"""
-    operations = []
-    
     for date_str in update.dates:
-        operations.append({
-            "update_one": {
-                "filter": {"property_id": update.property_id, "date": date_str},
-                "update": {
-                    "$set": {
-                        "property_id": update.property_id,
-                        "date": date_str,
-                        "price_per_night": update.price_per_night,
-                        "updated_at": datetime.now(timezone.utc).isoformat()
-                    }
-                },
-                "upsert": True
-            }
-        })
-    
-    if operations:
-        await db.daily_prices.bulk_write(operations)
+        await db.daily_prices.update_one(
+            {"property_id": update.property_id, "date": date_str},
+            {
+                "$set": {
+                    "property_id": update.property_id,
+                    "date": date_str,
+                    "price_per_night": update.price_per_night,
+                    "updated_at": datetime.now(timezone.utc).isoformat()
+                }
+            },
+            upsert=True
+        )
     
     return {
         "status": "success",
