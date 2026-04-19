@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Calendar, ChevronLeft, ChevronRight, Save, Copy, Edit2, TrendingUp, TrendingDown, Home } from 'lucide-react';
 import { Button } from '../components/ui/button';
@@ -355,11 +356,11 @@ const AdminPricingCalendar = () => {
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Ημερολόγιο Τιμών</h1>
             <p className="text-gray-600">Ορίστε τιμές για κάθε ημέρα του χρόνου</p>
             <div className="flex gap-2 mt-3">
-              <a href="/admin/pricing" className="text-sm text-blue-600 hover:underline">💰 Τιμές</a>
+              <Link to="/admin/pricing" className="text-sm text-blue-600 hover:underline font-medium">💰 Τιμές</Link>
               <span className="text-gray-300">|</span>
-              <a href="/admin/calendar-sync" className="text-sm text-blue-600 hover:underline">📅 Calendar Sync</a>
+              <Link to="/admin/calendar-sync" className="text-sm text-blue-600 hover:underline font-medium">📅 Calendar Sync</Link>
               <span className="text-gray-300">|</span>
-              <a href="/admin/properties" className="text-sm text-blue-600 hover:underline">🏠 Σπίτια</a>
+              <Link to="/admin/properties" className="text-sm text-blue-600 hover:underline font-medium">🏠 Σπίτια</Link>
             </div>
           </div>
           <LogoutButton />
