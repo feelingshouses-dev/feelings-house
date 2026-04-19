@@ -5,6 +5,7 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { toast } from 'sonner';
+import LogoutButton from '../components/LogoutButton';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -309,9 +310,12 @@ const AdminPricingCalendar = () => {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Ημερολόγιο Τιμών</h1>
-          <p className="text-gray-600">Ορίστε τιμές για κάθε ημέρα του χρόνου</p>
+        <div className="mb-6 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Ημερολόγιο Τιμών</h1>
+            <p className="text-gray-600">Ορίστε τιμές για κάθε ημέρα του χρόνου</p>
+          </div>
+          <LogoutButton />
         </div>
 
         {/* Controls */}
