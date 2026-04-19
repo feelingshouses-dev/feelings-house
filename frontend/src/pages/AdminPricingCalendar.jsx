@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { toast } from 'sonner';
 import LogoutButton from '../components/LogoutButton';
+import AdminNav from '../components/AdminNav';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -345,8 +346,9 @@ const AdminPricingCalendar = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      <AdminNav />
+      <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="mb-6 flex justify-between items-center">
           <div>
