@@ -24,6 +24,7 @@ from routes.calendar_routes import router as calendar_router, sync_service
 from routes.property_routes import router as property_router, init_db as init_property_db
 from routes.contact_routes import router as contact_router
 from routes.pricing_routes import router as pricing_router
+from routes.auth_routes import router as auth_router
 
 # Initialize property routes with shared database
 init_property_db(db)
@@ -56,6 +57,9 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting application...")
     
+    # Seed admin user
+    await seed_admin()
+    
     # Auto-seed properties if collection is empty
     try:
         properties_count = await db.properties.count_documents({})
@@ -87,6 +91,48 @@ async def lifespan(app: FastAPI):
     # Shutdown
     scheduler.shutdown()
     logger.info("Scheduler stopped")
+
+async def seed_admin():
+    """Seed admin user from environment variables"""
+    from utils.auth import hash_password, verify_password
+    from uuid import uuid4
+    
+    logger = logging.getLogger(__name__)
+    admin_email = os.environ.get("ADMIN_EMAIL", "admin@example.com")
+    admin_password = os.environ.get("ADMIN_PASSWORD", "admin123")
+    
+    existing = await db.users.find_one({"email": admin_email}, {"_id": 0})
+    
+    if existing is None:
+        hashed = hash_password(admin_password)
+        admin_user = {
+            "id": str(uuid4()),
+            "email": admin_email,
+            "password_hash": hashed,
+            "name": "Admin",
+            "role": "admin",
+            "created_at": datetime.now(timezone.utc)
+        }
+        await db.users.insert_one(admin_user)
+        logger.info(f"✅ Admin user created: {admin_email}")
+        
+        # Save credentials to test_credentials.md
+        with open("/app/memory/test_credentials.md", "w") as f:
+            f.write(f"# Admin Credentials\\n\\n")
+            f.write(f"**Email:** {admin_email}\\n")
+            f.write(f"**Password:** {admin_password}\\n")
+            f.write(f"**Role:** admin\\n\\n")
+            f.write(f"## Auth Endpoints\\n\\n")
+            f.write(f"- POST `/api/auth/login`\\n")
+            f.write(f"- GET `/api/auth/me`\\n")
+            f.write(f"- POST `/api/auth/logout`\\n")
+    elif not verify_password(admin_password, existing["password_hash"]):
+        hashed = hash_password(admin_password)
+        await db.users.update_one(
+            {"email": admin_email},
+            {"$set": {"password_hash": hashed}}
+        )
+        logger.info(f"✅ Admin password updated for: {admin_email}")
 
 # Create the main app with lifespan
 app = FastAPI(lifespan=lifespan)
@@ -136,6 +182,7 @@ async def get_status_checks():
     return status_checks
 
 # Include routes
+api_router.include_router(auth_router, tags=["Authentication"])
 api_router.include_router(calendar_router, prefix="/calendar", tags=["Calendar Sync"])
 api_router.include_router(property_router, prefix="/properties", tags=["Properties"])
 api_router.include_router(contact_router, prefix="/contact", tags=["Contact"])
